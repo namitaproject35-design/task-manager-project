@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>Project Task Manager</h1>
+
+<p>
+    Welcome, <b>{{ username }}</b> |
+    <a href="/logout">Logout</a>
+</p>
+
+<div class="container">
+
+    <form action="/add" method="POST">
+
+        <input
+            type="text"
+            name="task_name"
+            placeholder="Enter Task Name"
+            required>
+
+        <input
+            type="date"
+            name="due_date"
+            required>
+
+        <select name="priority" required>
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <button type="submit">
+            Add Task
+        </button>
+
+    </form>
+<form method="GET" action="/">
+    <input
+        type="text"
+        name="search"
+        placeholder="Search Task"
+        value="{{ search }}">
+
+    <button type="submit">
+        Search
+    </button>
+
+    <a href="/">
+        Show All
+    </a>
+</form>
+
+<br>
+    <h2>Task List</h2>
+
+    <table border="1">
+
+        <tr>
+            <th>ID</th>
+            <th>Task Name</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for task in tasks %}
+        <tr>
+
+            <td>{{ task[0] }}</td>
+            <td>{{ task[1] }}</td>
+            <td>{{ task[2] }}</td>
+            <td>{{ task[3] }}</td>
+            <td>{{ task[4] }}</td>
+
+            <td>
+
+                <a href="/update_status/{{ task[0] }}">
+                    Update Status
+                </a>
+
+                |
+
+                <a href="/delete/{{ task[0] }}">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
